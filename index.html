@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>opus</title>
+<title>Opus School</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -20,59 +20,40 @@
     padding: 48px 24px;
   }
 
-  .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-  }
-
   .logo {
     display: block;
-    width: clamp(280px, 50vw, 480px);
+    width: clamp(200px, 36vw, 360px);
     height: auto;
-    margin-bottom: 32px;
-  }
-
-  .wordmark {
-    font-family: 'Sora', sans-serif;
-    font-size: clamp(36px, 6vw, 56px);
-    font-weight: 400;
-    letter-spacing: 0.08em;
     margin-bottom: 64px;
+    opacity: 0.9;
   }
 
   blockquote {
-    max-width: 540px;
+    max-width: 580px;
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: clamp(14px, 2vw, 17px);
-    line-height: 1.65;
+    font-size: clamp(16px, 2.4vw, 21px);
+    line-height: 1.6;
     font-weight: 400;
     font-style: italic;
-    color: #666;
-    text-align: center;
+    text-align: left;
   }
 
   cite {
     display: block;
-    margin-top: 16px;
+    margin-top: 24px;
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: clamp(12px, 1.6vw, 14px);
+    font-size: clamp(13px, 1.8vw, 15px);
     font-style: normal;
-    font-weight: 400;
-    color: #999;
+    font-weight: 500;
     letter-spacing: 0.02em;
   }
 </style>
 </head>
 <body>
-<div class="hero">
-  <img src="logo.png" alt="opus" class="logo">
-  <div class="wordmark">opus</div>
+  <img src="logo.png" alt="Opus School" class="logo">
   <blockquote>
-    &ldquo;Let the main object of education be to seek and to find a method of instruction, by which teachers may teach less, but learners may learn more.&rdquo;
-    <cite>Comenius, 1632</cite>
+    &ldquo;Let the main object [of education] be to seek and to find a method of instruction, by which teachers may teach less, but learners may learn more; by which schools may be the scene of less noise, aversion, and useless labour, but of more leisure, enjoyment, and solid progress; and through which the&nbsp;[&hellip;] community may have less darkness, perplexity, and dissension, but on the other hand more light, orderliness, peace.&rdquo;
+    <cite>Jan Amos Comenius, Didactica Magna, 1632</cite>
   </blockquote>
-</div>
 </body>
 </html>
