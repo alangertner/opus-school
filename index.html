@@ -5,7 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>opus</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+  @font-face {
+    font-family: 'P22 Monet';
+    src: url('fonts/p22-monet.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -18,42 +25,159 @@
     align-items: center;
     justify-content: center;
     padding: 48px 24px;
+    overflow: hidden;
   }
 
   .logo {
     display: block;
     width: clamp(240px, 55vw, 340px);
     height: auto;
-    margin-bottom: 100px;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+    z-index: 1;
+  }
+
+  .logo.visible {
     opacity: 0.9;
   }
 
+  .quote-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    transition: opacity 1.8s ease;
+    z-index: 2;
+  }
+
+  .quote-container.fade-out {
+    opacity: 0;
+  }
+
   blockquote {
-    max-width: 580px;
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: clamp(12px, 1.3vw, 14px);
-    line-height: 1.6;
+    max-width: 620px;
+    font-family: 'P22 Monet', cursive;
+    font-size: clamp(24px, 3.2vw, 36px);
+    line-height: 1.5;
     font-weight: 400;
-    font-style: italic;
     text-align: left;
+    color: #1a1a1a;
+    transition: font-family 0.8s ease, font-size 0.8s ease, line-height 0.8s ease, letter-spacing 0.8s ease;
+  }
+
+  blockquote.modern {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(16px, 2vw, 23px);
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+
+  .char {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    display: inline;
+  }
+
+  .char.visible {
+    opacity: 1;
   }
 
   cite {
     display: block;
-    margin-top: 8px;
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: clamp(10px, 1.1vw, 12px);
+    margin-top: 12px;
+    font-family: 'P22 Monet', cursive;
+    font-size: clamp(16px, 2vw, 22px);
     font-style: normal;
     font-weight: 500;
     letter-spacing: 0.02em;
+    opacity: 0;
+    transition: opacity 1s ease, font-family 0.8s ease, font-size 0.8s ease, letter-spacing 0.8s ease;
+    color: #333;
+  }
+
+  cite.visible {
+    opacity: 1;
+  }
+
+  cite.modern {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(13px, 1.5vw, 18px);
+    letter-spacing: 0.01em;
   }
 </style>
 </head>
 <body>
-  <img src="logo.svg" alt="opus" class="logo">
-  <blockquote>
-    &ldquo;Let the main object [of education] be to seek and to find a method of instruction, by which teachers may teach less, but learners may learn more; by which schools may be the scene of less noise, aversion, and useless labour, but of more leisure, enjoyment, and solid progress; and through which the community may have less darkness, perplexity, and dissension, but on the other hand more light, orderliness, peace.&rdquo;
-    <cite>Jan Amos Comenius, Didactica Magna, 1632</cite>
-  </blockquote>
+  <img src="logo.svg" alt="opus" class="logo" id="logo">
+  <div class="quote-container" id="quoteContainer">
+    <blockquote id="quote"></blockquote>
+    <cite id="cite">&mdash; Jan Amos Comenius, Didactica Magna, 1632</cite>
+  </div>
+
+<script>
+const text = '\u201cLet the main object of education be to seek and to find a method of instruction, by which teachers may teach less, but learners may learn more; by which schools may be the scene of less noise, aversion, and useless labour, but of more leisure, enjoyment, and solid progress; and through which the community may have less darkness, perplexity, and dissension, but on the other hand more light, orderliness, peace.\u201d';
+
+const quote = document.getElementById('quote');
+const cite = document.getElementById('cite');
+const logo = document.getElementById('logo');
+const container = document.getElementById('quoteContainer');
+
+// Split into characters
+const chars = [];
+for (let i = 0; i < text.length; i++) {
+  const span = document.createElement('span');
+  span.className = 'char';
+  span.textContent = text[i];
+  quote.appendChild(span);
+  chars.push(span);
+}
+
+// Writing speed
+const baseSpeed = 45;
+const startDelay = 800;
+let elapsed = 0;
+
+chars.forEach((span, i) => {
+  const char = text[i];
+  let delay = baseSpeed + (Math.random() * 20 - 10);
+  if (char === ',' || char === ';') delay += 120;
+  if (char === '.') delay += 180;
+  if (char === ' ') delay += 15;
+  elapsed += delay;
+
+  setTimeout(() => {
+    span.classList.add('visible');
+  }, startDelay + elapsed);
+});
+
+const totalTime = startDelay + elapsed;
+
+// Show citation
+setTimeout(() => {
+  cite.classList.add('visible');
+}, totalTime + 500);
+
+// Brief absorb in handwriting (1.5s)
+const handwritingAbsorb = 1500;
+
+// Morph to modern font
+setTimeout(() => {
+  quote.classList.add('modern');
+  cite.classList.add('modern');
+}, totalTime + 500 + handwritingAbsorb);
+
+// Absorb in modern font (4s)
+const modernAbsorb = 8000;
+
+// Fade out quote
+setTimeout(() => {
+  container.classList.add('fade-out');
+}, totalTime + 500 + handwritingAbsorb + 800 + modernAbsorb);
+
+// Fade in logo
+setTimeout(() => {
+  logo.classList.add('visible');
+}, totalTime + 500 + handwritingAbsorb + 800 + modernAbsorb + 2200);
+</script>
 </body>
 </html>
